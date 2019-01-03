@@ -5,7 +5,15 @@ import {assert} from 'chai'
 
 const username = process.env.KOBITON_USERNAME
 const apiKey = process.env.KOBITON_API_KEY
+
+const deviceUdid = process.env.KOBITON_DEVICE_UDID || ''
 const deviceName = process.env.KOBITON_DEVICE_NAME || 'iPhone*'
+const deviceOrientation = process.env.KOBITON_SESSION_DEVICE_ORIENTATION || 'portrait'
+const captureScreenshots = process.env.KOBITON_SESSION_CAPTURE_SCREENSHOTS || true
+const deviceGroup = process.env.KOBITON_SESSION_DEVICE_GROUP || 'KOBITON'
+const app = process.env.KOBITON_SESSION_APPLICATION_URL || 'https://s3-ap-southeast-1.amazonaws.com/kobiton-devvn/apps-test/UIKitCatalog-Test-Adhoc.ipa'
+const platformVersion = process.env.KOBITON_SESSION_PLATFORM_VERSION || ''
+const groupId = process.env.KOBITON_SESSION_GROUP_ID || ''
 
 const kobitonServerConfig = {
   protocol: 'https',
@@ -16,12 +24,23 @@ const kobitonServerConfig = {
 const desiredCaps = {
   sessionName:        'Automation test session',
   sessionDescription: 'This is an example for iOS app', 
-  deviceOrientation:  'portrait',  
-  captureScreenshots: true, 
-  deviceGroup:        'KOBITON', 
-  deviceName:         deviceName,
+  deviceOrientation:  deviceOrientation,  
+  captureScreenshots: captureScreenshots, 
+  deviceGroup:        deviceGroup, 
   platformName:       'iOS',
-  app: 'https://s3-ap-southeast-1.amazonaws.com/kobiton-devvn/apps-test/UIKitCatalog-Test-Adhoc.ipa'
+  app: app
+}
+
+if (deviceUdid) {
+  desiredCaps['deviceUdid'] = deviceUdid
+}
+else {
+  desiredCaps['deviceName'] = deviceName
+  desiredCaps['platformVersion'] = platformVersion
+}
+
+if (groupId) {
+  desiredCaps['groupId'] = groupId
 }
 
 let driver

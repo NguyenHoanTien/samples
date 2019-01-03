@@ -18,16 +18,38 @@ public class Android_web {
 
 	@Given("^User starts a session on android device$")
 	public void start_an_android_web_session() throws MalformedURLException {
-		URL kobitonServerUrl = new URL("https://<KOBITON_USERNAME>:<KOBITON_API_KEY>@api.kobiton.com/wd/hub");
+		String deviceUdid = System.getenv("KOBITON_DEVICE_UDID");
+		String deviceName = System.getenv("KOBITON_DEVICE_NAME");
+		
+		String deviceOrientation = System.getenv("KOBITON_SESSION_DEVICE_ORIENTATION");
+		String captureScreenshots = System.getenv("KOBITON_SESSION_CAPTURE_SCREENSHOTS");
+		String deviceGroup = System.getenv("KOBITON_SESSION_DEVICE_GROUP");
+		String browserName = System.getenv("KOBITON_SESSION_BROWSER_NAME");
+		String platformVersion = System.getenv("KOBITON_SESSION_PLATFORM_VERSION");
+		String groupId = System.getenv("KOBITON_SESSION_GROUP_ID");
+
+		URL kobitonServerUrl = new URL("https://" + username + ":" + apiKey + "@api.kobiton.com/wd/hub");
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability("sessionName", "Automation test android web session");
-		capabilities.setCapability("sessionDescription", "Automation test android web session"); 
-		capabilities.setCapability("deviceOrientation", "portrait");  
-		capabilities.setCapability("captureScreenshots", true); 
-		capabilities.setCapability("browserName", "chrome"); 
-		capabilities.setCapability("deviceGroup", "KOBITON"); 
-		capabilities.setCapability("deviceName", "Galaxy S6");
+		capabilities.setCapability("sessionName", "Automation test android app session");
+		capabilities.setCapability("sessionDescription", "Automation test android app session"); 
+		capabilities.setCapability("deviceOrientation", ((deviceUdid == null) ? "portrait" : deviceUdid));  
+		capabilities.setCapability("captureScreenshots", Boolean.parseBoolean((captureScreenshots == null) ? "true" : captureScreenshots)); 
+		capabilities.setCapability("browserName", ((browserName == null) ? "chrome" : browserName)); 
+		capabilities.setCapability("deviceGroup", ((deviceGroup == null) ? "KOBITON" : deviceGroup));
 		capabilities.setCapability("platformName", "Android");
+		
+		if (!isEmpty(deviceUdid)) {
+			capabilities.setCapability("deviceUdid", deviceUdid);
+		}
+		else {
+			capabilities.setCapability("deviceName", ((deviceName == null) ? "Galaxy S6" : deviceName));
+			capabilities.setCapability("platformVersion", platformVersion);
+		}
+		
+		if (!isEmpty(groupId)) {
+			capabilities.setCapability("groupId", groupId);
+		}
+
 		driver = new AndroidDriver<WebElement>(kobitonServerUrl, capabilities);
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 	}
