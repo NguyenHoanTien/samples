@@ -21,6 +21,9 @@ public class Ios_app {
 
 	@Given("^User starts a session on ios device$")
 	public void start_an_ios_app_session() throws MalformedURLException {
+		String username = System.getenv("KOBITON_USERNAME");
+		String apiKey = System.getenv("KOBITON_API_KEY");
+		
 		String deviceUdid = System.getenv("KOBITON_DEVICE_UDID");
 		String deviceName = System.getenv("KOBITON_DEVICE_NAME");
 		
@@ -35,13 +38,13 @@ public class Ios_app {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("sessionName", "Automation test ios app session");
 		capabilities.setCapability("sessionDescription", "Automation test ios app session"); 
-		capabilities.setCapability("deviceOrientation", ((deviceUdid == null) ? "portrait" : deviceUdid));  
+		capabilities.setCapability("deviceOrientation", ((deviceOrientation == null) ? "portrait" : deviceOrientation));  
 		capabilities.setCapability("captureScreenshots", Boolean.parseBoolean((captureScreenshots == null) ? "true" : captureScreenshots)); 
 		capabilities.setCapability("app", ((app == null) ? "https://s3-ap-southeast-1.amazonaws.com/kobiton-devvn/apps-test/demo/iFixit.ipa" : app)); 
 		capabilities.setCapability("deviceGroup", ((deviceGroup == null) ? "KOBITON" : deviceGroup));
 		capabilities.setCapability("platformName", "iOS");
 		
-		if (!isEmpty(deviceUdid)) {
+		if (deviceUdid != null) {
 			capabilities.setCapability("deviceUdid", deviceUdid);
 		}
 		else {
@@ -49,7 +52,7 @@ public class Ios_app {
 			capabilities.setCapability("platformVersion", platformVersion);
 		}
 		
-		if (!isEmpty(groupId)) {
+		if (groupId != null) {
 			capabilities.setCapability("groupId", groupId);
 		}
 

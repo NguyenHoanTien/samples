@@ -18,6 +18,9 @@ public class Ios_web {
 
 	@Given("^User starts a session on iOS device$")
 	public void start_an_ios_web_session() throws MalformedURLException {
+		String username = System.getenv("KOBITON_USERNAME");
+		String apiKey = System.getenv("KOBITON_API_KEY");
+		
 		String deviceUdid = System.getenv("KOBITON_DEVICE_UDID");
 		String deviceName = System.getenv("KOBITON_DEVICE_NAME");
 		
@@ -32,21 +35,21 @@ public class Ios_web {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("sessionName", "Automation test ios app session");
 		capabilities.setCapability("sessionDescription", "Automation test ios app session"); 
-		capabilities.setCapability("deviceOrientation", ((deviceUdid == null) ? "portrait" : deviceUdid));  
+		capabilities.setCapability("deviceOrientation", ((deviceOrientation == null) ? "portrait" : deviceOrientation));  
 		capabilities.setCapability("captureScreenshots", Boolean.parseBoolean((captureScreenshots == null) ? "true" : captureScreenshots)); 
 		capabilities.setCapability("browserName", ((browserName == null) ? "safari" : browserName)); 
 		capabilities.setCapability("deviceGroup", ((deviceGroup == null) ? "KOBITON" : deviceGroup));
 		capabilities.setCapability("platformName", "iOS");
 		
-		if (!isEmpty(deviceUdid)) {
+		if (deviceUdid != null) {
 			capabilities.setCapability("deviceUdid", deviceUdid);
 		}
 		else {
-			capabilities.setCapability("deviceName", ((deviceName == null) ? "iPad mini 2G (Cellular)" : deviceName));
+			capabilities.setCapability("deviceName", ((deviceName == null) ? "iPad*" : deviceName));
 			capabilities.setCapability("platformVersion", platformVersion);
 		}
 		
-		if (!isEmpty(groupId)) {
+		if (groupId != null) {
 			capabilities.setCapability("groupId", groupId);
 		}
 
