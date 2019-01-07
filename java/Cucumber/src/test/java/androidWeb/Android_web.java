@@ -33,8 +33,8 @@ public class Android_web {
 
 		URL kobitonServerUrl = new URL("https://" + username + ":" + apiKey + "@api.kobiton.com/wd/hub");
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability("sessionName", "Automation test android app session");
-		capabilities.setCapability("sessionDescription", "Automation test android app session"); 
+		capabilities.setCapability("sessionName", "Automation test android web session");
+		capabilities.setCapability("sessionDescription", "Automation test android web session"); 
 		capabilities.setCapability("deviceOrientation", ((deviceOrientation == null) ? "portrait" : deviceOrientation));  
 		capabilities.setCapability("captureScreenshots", Boolean.parseBoolean((captureScreenshots == null) ? "true" : captureScreenshots)); 
 		capabilities.setCapability("browserName", ((browserName == null) ? "chrome" : browserName)); 

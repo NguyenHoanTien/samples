@@ -26,7 +26,8 @@ public class AppTestAndroid extends BaseTest {
         super.Setup();
 
         String deviceUdid = System.getenv("KOBITON_DEVICE_UDID");
-		String deviceName = System.getenv("KOBITON_DEVICE_NAME");
+        String deviceName = System.getenv("KOBITON_DEVICE_NAME");
+        
 		String deviceOrientation = System.getenv("KOBITON_SESSION_DEVICE_ORIENTATION");
 		String captureScreenshots = System.getenv("KOBITON_SESSION_CAPTURE_SCREENSHOTS");
 		String deviceGroup = System.getenv("KOBITON_SESSION_DEVICE_GROUP");

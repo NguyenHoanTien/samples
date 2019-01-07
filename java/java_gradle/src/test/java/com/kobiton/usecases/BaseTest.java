@@ -24,8 +24,8 @@ public class BaseTest extends TestListenerAdapter {
     private String hostName = "api.kobiton.com";
 
     public BaseTest() {
-        this.username = System.getenv("KOBITON_USERNAME");
-        this.apiKey = System.getenv("KOBITON_API_KEY");
+        this.username = "tienhnguyen";
+        this.apiKey = "37e24f96-7acd-4991-b5b3-e50de4a1cd4f";
 
         String envHostName = System.getenv("KOBITON_AUTOMATION_HOSTNAME");
         if (envHostName != null) {
