@@ -18,6 +18,9 @@ public class Android_web {
 
 	@Given("^User starts a session on android device$")
 	public void start_an_android_web_session() throws MalformedURLException {
+		String username = System.getenv("KOBITON_USERNAME");
+		String apiKey = System.getenv("KOBITON_API_KEY");
+
 		String deviceUdid = System.getenv("KOBITON_DEVICE_UDID");
 		String deviceName = System.getenv("KOBITON_DEVICE_NAME");
 		
@@ -32,13 +35,13 @@ public class Android_web {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("sessionName", "Automation test android app session");
 		capabilities.setCapability("sessionDescription", "Automation test android app session"); 
-		capabilities.setCapability("deviceOrientation", ((deviceUdid == null) ? "portrait" : deviceUdid));  
+		capabilities.setCapability("deviceOrientation", ((deviceOrientation == null) ? "portrait" : deviceOrientation));  
 		capabilities.setCapability("captureScreenshots", Boolean.parseBoolean((captureScreenshots == null) ? "true" : captureScreenshots)); 
 		capabilities.setCapability("browserName", ((browserName == null) ? "chrome" : browserName)); 
 		capabilities.setCapability("deviceGroup", ((deviceGroup == null) ? "KOBITON" : deviceGroup));
 		capabilities.setCapability("platformName", "Android");
 		
-		if (!isEmpty(deviceUdid)) {
+		if (deviceUdid != null) {
 			capabilities.setCapability("deviceUdid", deviceUdid);
 		}
 		else {
@@ -46,7 +49,7 @@ public class Android_web {
 			capabilities.setCapability("platformVersion", platformVersion);
 		}
 		
-		if (!isEmpty(groupId)) {
+		if (groupId != null) {
 			capabilities.setCapability("groupId", groupId);
 		}
 
